@@ -1,0 +1,12 @@
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\bin\Release\TraduccionMain.exe
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\bin\Release\TraduccionMain.pdb
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\bin\Release\LinqToExcel.dll
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\bin\Release\SharpDX.DirectInput.dll
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\GamesTraductions.csproj.AssemblyReference.cache
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\TraduccionMain.Form1.resources
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\TraduccionMain.Properties.Resources.resources
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\GamesTraductions.csproj.GenerateResource.cache
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\GamesTraductions.csproj.CoreCompileInputs.cache
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\GamesTraductions.csproj.CopyComplete
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\TraduccionMain.exe
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\TraduccionMain.pdb
