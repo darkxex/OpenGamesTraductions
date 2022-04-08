@@ -10,3 +10,5 @@ C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\GamesTra
 C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\GamesTraductions.csproj.CopyComplete
 C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\TraduccionMain.exe
 C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\TraduccionMain.pdb
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\bin\Release\TraduccionMain.exe.config
+C:\Users\darkx\OneDrive\Desktop\descompile\GamesTraductions\obj\Release\GamesTraductions.csproj.SuggestedBindingRedirects.cache

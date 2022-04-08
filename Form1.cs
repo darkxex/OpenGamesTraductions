@@ -135,7 +135,7 @@ namespace TraduccionMain
     private Panel panel2;
     protected WebBrowser webBrowser1;
     private Label label16;
-    private LinkLabel linkLabel2;
+        private CheckBox chDeepL;
 
     public Form1()
     {
@@ -545,8 +545,15 @@ namespace TraduccionMain
         {
           string str2 = this.codificaText(this.resulTraduc).Replace('"', '_').Trim().Replace('/', '_').Trim().Replace("|", "I").Trim().Replace("  ", "").Replace("   ", "");
           this.webBrowser1.ScriptErrorsSuppressed = true;
-          string urlString = "https://translate.google.es/?hl=ca#view=home&op=translate&sl=" + this.inLeng + "&tl=" + this.outLeng + "&text=" + str2.Trim();
-          this.textBoxTextoTraducidoExcel.Focus();
+  
+           string urlString = "https://translate.google.es/?hl=ca#view=home&op=translate&sl=" + this.inLeng + "&tl=" + this.outLeng + "&text=" + str2.Trim();
+
+           if (this.chDeepL.Checked)
+           urlString = "https://www.deepl.com/es/translator#en/es/" + (str2.Trim()).Replace("\n", "%0A");
+                    
+            Clipboard.SetText(urlString);
+
+            this.textBoxTextoTraducidoExcel.Focus();
           if (this.cbViewTraductor.Checked)
           {
             this.webBrowser1.Navigate(urlString);
@@ -857,7 +864,6 @@ namespace TraduccionMain
     {
     }
 
-    private void linkDonate(object sender, LinkLabelLinkClickedEventArgs e) => Process.Start("https://paypal.me/ReidloGames?locale.x=es_ES");
 
     private void checkBoxExcelTranslate_CheckedChanged(object sender, EventArgs e)
     {
@@ -1370,7 +1376,7 @@ namespace TraduccionMain
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.chDeepL = new System.Windows.Forms.CheckBox();
             this.label16 = new System.Windows.Forms.Label();
             this.checkBoxExcelTranslate = new System.Windows.Forms.CheckBox();
             this.textBoxExcelName = new System.Windows.Forms.TextBox();
@@ -1579,7 +1585,7 @@ namespace TraduccionMain
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.linkLabel2);
+            this.panel1.Controls.Add(this.chDeepL);
             this.panel1.Controls.Add(this.label16);
             this.panel1.Controls.Add(this.checkBoxExcelTranslate);
             this.panel1.Controls.Add(this.textBoxExcelName);
@@ -1646,17 +1652,17 @@ namespace TraduccionMain
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseEnter += new System.EventHandler(this.EntraPanel);
             // 
-            // linkLabel2
+            // chDeepL
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.linkLabel2.Location = new System.Drawing.Point(161, 275);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(125, 17);
-            this.linkLabel2.TabIndex = 70;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Donate , thanks  :)";
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkDonate);
+            this.chDeepL.AutoSize = true;
+            this.chDeepL.Checked = true;
+            this.chDeepL.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chDeepL.Location = new System.Drawing.Point(270, 265);
+            this.chDeepL.Name = "chDeepL";
+            this.chDeepL.Size = new System.Drawing.Size(160, 17);
+            this.chDeepL.TabIndex = 71;
+            this.chDeepL.Text = "DeepL (Google Unchecked)";
+            this.chDeepL.UseVisualStyleBackColor = true;
             // 
             // label16
             // 
@@ -2185,6 +2191,7 @@ namespace TraduccionMain
             this.comboBox1.Size = new System.Drawing.Size(82, 21);
             this.comboBox1.TabIndex = 19;
             this.comboBox1.Text = "Ingles";
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // numOpaci
             // 
@@ -2328,5 +2335,11 @@ namespace TraduccionMain
             this.ResumeLayout(false);
 
     }
-  }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+    }
 }
