@@ -16,6 +16,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -103,7 +104,6 @@ namespace TraduccionMain
     private CheckBox checkBox1;
     private CheckBox checkBox3;
     private Label label9;
-    private LinkLabel linkLabel1;
     private NumericUpDown numericDownYfin;
     private NumericUpDown numericDownYpri;
     private NumericUpDown numericCenterYfin;
@@ -125,7 +125,6 @@ namespace TraduccionMain
     private Label label14;
     private RadioButton radioButAnime;
     private Label label10;
-    private Label label15;
     private CheckBox checkBoxExcelTranslate;
     private TextBox textBoxExcelName;
     private NumericUpDown numPort;
@@ -137,6 +136,8 @@ namespace TraduccionMain
     private Panel panel2;
     protected WebBrowser webBrowser1;
     private Label label16;
+        private System.Windows.Forms.Timer timer1;
+        private Label label15;
         private CheckBox chDeepL;
 
     public Form1()
@@ -420,7 +421,8 @@ namespace TraduccionMain
         this.hiloExcel.IsBackground = true;*/
       }
       this.openWeb();
-    }
+      this.WindowState = FormWindowState.Normal;
+        }
 
     public void imagenAbinario()
     {
@@ -548,9 +550,9 @@ namespace TraduccionMain
           string str2 = this.codificaText(this.resulTraduc).Replace('"', '_').Trim().Replace('/', '_').Trim().Replace("|", "I").Trim().Replace("  ", "").Replace("   ", "");
           //this.webBrowser1.ScriptErrorsSuppressed = true;
   
-           string urlString = "https://translate.google.es/?hl=ca#view=home&op=translate&sl=" + this.inLeng + "&tl=" + this.outLeng + "&text=" + str2.Trim();
+           string urlString = "https://translate.google.cl/?sl=" + this.inLeng + "&tl=" + this.outLeng + "&text=" + str2.Trim();
                     if (this.chDeepL.Checked)
-                        urlString = "https://www.deepl.com/es/translator#en/es/" + (str2.Trim()).Replace("\n", "%0A");
+                        urlString = "https://www.deepl.com/es/translator#"+this.inLeng+"/"+this.outLeng+"/" + (str2.Trim()).Replace("\n", "%0A");
 
                     Clipboard.SetText(urlString);
 
@@ -588,13 +590,13 @@ namespace TraduccionMain
       this.Empezamos();
     }
 
-    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+    /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
       if (keyData == Keys.Down || keyData == Keys.NumPad0)
         this.Empezamos();
       return base.ProcessCmdKey(ref msg, keyData);
     }
-        /*
+
     public void leeExcel()
     {
       Thread.Sleep(200);
@@ -748,11 +750,7 @@ namespace TraduccionMain
 
     public static bool IsKeyPressed(ConsoleKey key) => Console.KeyAvailable && Console.ReadKey(true).Key == key;
 
-    private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-    {
-      this.linkLabel1.LinkVisited = true;
-      Process.Start("http://www.gamestraductions.com");
-    }
+   
 
     private void FormExit(object sender, FormClosedEventArgs e)
     {
@@ -865,7 +863,7 @@ namespace TraduccionMain
     }
         ChromiumWebBrowser browser;
     private void Form1_Load(object sender, EventArgs e) {
-            browser = new ChromiumWebBrowser("www.google.com");
+            browser = new ChromiumWebBrowser("https://github.com/darkxex/OpenGamesTraductions/");
             webBrowser1.Controls.Add(browser);
             this.ActiveControl = (Control)this.textBoxTextoTraducidoExcel; }
    
@@ -1373,6 +1371,7 @@ namespace TraduccionMain
 
     private void InitializeComponent()
     {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.labAncho = new System.Windows.Forms.Label();
             this.labAlto = new System.Windows.Forms.Label();
@@ -1390,7 +1389,6 @@ namespace TraduccionMain
             this.label16 = new System.Windows.Forms.Label();
             this.checkBoxExcelTranslate = new System.Windows.Forms.CheckBox();
             this.textBoxExcelName = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.radioButAnime = new System.Windows.Forms.RadioButton();
             this.label14 = new System.Windows.Forms.Label();
@@ -1412,7 +1410,6 @@ namespace TraduccionMain
             this.numericCenterYpri = new System.Windows.Forms.NumericUpDown();
             this.numericTopYfin = new System.Windows.Forms.NumericUpDown();
             this.numericTopYpri = new System.Windows.Forms.NumericUpDown();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label9 = new System.Windows.Forms.Label();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -1439,6 +1436,8 @@ namespace TraduccionMain
             this.checkOnlyTradu = new System.Windows.Forms.CheckBox();
             this.textBoxTextoTraducidoExcel = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label15 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numIniX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFinX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFinY)).BeginInit();
@@ -1595,11 +1594,11 @@ namespace TraduccionMain
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label15);
             this.panel1.Controls.Add(this.chDeepL);
             this.panel1.Controls.Add(this.label16);
             this.panel1.Controls.Add(this.checkBoxExcelTranslate);
             this.panel1.Controls.Add(this.textBoxExcelName);
-            this.panel1.Controls.Add(this.label15);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.radioButAnime);
             this.panel1.Controls.Add(this.label14);
@@ -1621,7 +1620,6 @@ namespace TraduccionMain
             this.panel1.Controls.Add(this.numericCenterYpri);
             this.panel1.Controls.Add(this.numericTopYfin);
             this.panel1.Controls.Add(this.numericTopYpri);
-            this.panel1.Controls.Add(this.linkLabel1);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.checkBox3);
             this.panel1.Controls.Add(this.checkBox2);
@@ -1665,8 +1663,6 @@ namespace TraduccionMain
             // chDeepL
             // 
             this.chDeepL.AutoSize = true;
-            this.chDeepL.Checked = true;
-            this.chDeepL.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chDeepL.Location = new System.Drawing.Point(270, 265);
             this.chDeepL.Name = "chDeepL";
             this.chDeepL.Size = new System.Drawing.Size(160, 17);
@@ -1678,11 +1674,11 @@ namespace TraduccionMain
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(201, 111);
+            this.label16.Location = new System.Drawing.Point(221, 114);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(114, 13);
+            this.label16.Size = new System.Drawing.Size(82, 13);
             this.label16.TabIndex = 69;
-            this.label16.Text = "Key Down y number 0 ";
+            this.label16.Text = "Key:  Number 0 ";
             // 
             // checkBoxExcelTranslate
             // 
@@ -1706,16 +1702,7 @@ namespace TraduccionMain
             this.textBoxExcelName.Name = "textBoxExcelName";
             this.textBoxExcelName.Size = new System.Drawing.Size(100, 20);
             this.textBoxExcelName.TabIndex = 67;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(181, 189);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(65, 13);
-            this.label15.TabIndex = 66;
-            this.label15.Text = "File Excel:";
+            this.textBoxExcelName.Visible = false;
             // 
             // label10
             // 
@@ -1795,6 +1782,7 @@ namespace TraduccionMain
             this.comboBox4.Size = new System.Drawing.Size(75, 20);
             this.comboBox4.TabIndex = 58;
             this.comboBox4.Text = "L3 Ps4";
+            this.comboBox4.Visible = false;
             // 
             // comboBoxSeg
             // 
@@ -1846,6 +1834,7 @@ namespace TraduccionMain
             this.label12.Size = new System.Drawing.Size(94, 13);
             this.label12.TabIndex = 53;
             this.label12.Text = "Button Profiles:";
+            this.label12.Visible = false;
             // 
             // label11
             // 
@@ -1870,6 +1859,8 @@ namespace TraduccionMain
             this.comboBox3.Size = new System.Drawing.Size(75, 20);
             this.comboBox3.TabIndex = 51;
             this.comboBox3.Text = "Select Ps4";
+            this.comboBox3.Visible = false;
+            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
             // 
             // cbViewTraductor
             // 
@@ -2007,17 +1998,6 @@ namespace TraduccionMain
             0,
             0});
             this.numericTopYpri.Visible = false;
-            // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(418, 279);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(146, 13);
-            this.linkLabel1.TabIndex = 40;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "www.GamesTraductions.com";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label9
             // 
@@ -2257,6 +2237,7 @@ namespace TraduccionMain
             this.webBrowser1.Size = new System.Drawing.Size(1252, 556);
             this.webBrowser1.TabIndex = 19456;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
+            this.webBrowser1.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowser1_DocumentCompleted);
             // 
             // indicador
             // 
@@ -2304,12 +2285,27 @@ namespace TraduccionMain
             this.panel2.Size = new System.Drawing.Size(1269, 538);
             this.panel2.TabIndex = 19;
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(436, 270);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(143, 26);
+            this.label15.TabIndex = 72;
+            this.label15.Text = "Author: ReidloGames\r\nUnofficial Update: Angel Xex";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1762, 343);
+            this.ClientSize = new System.Drawing.Size(1784, 312);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2317,7 +2313,7 @@ namespace TraduccionMain
             this.MinimumSize = new System.Drawing.Size(300, 39);
             this.Name = "Form1";
             this.Tag = "";
-            this.Text = "GamesTraductions 4.1";
+            this.Text = "Open GamesTraductions (1.0)";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormExit);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -2353,6 +2349,25 @@ namespace TraduccionMain
         }
 
         private void textBoxTextoTraducidoExcel_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void webBrowser1_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        {
+
+        }
+        [DllImport("user32.dll")]
+     public static extern bool GetAsyncKeyState(System.Windows.Forms.Keys vKey);
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (GetAsyncKeyState(Keys.NumPad0))
+                this.Empezamos();
+
+        }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
