@@ -6,6 +6,7 @@
 
 using CefSharp.WinForms;
 using SharpDX.DirectInput;
+using SharpDX.XInput;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -136,10 +137,10 @@ namespace TraduccionMain
     private Panel panel2;
     protected WebBrowser webBrowser1;
     private Label label16;
-        private System.Windows.Forms.Timer timer1;
-        private Label label15;
-        private CheckBox chDeepL;
-
+    private System.Windows.Forms.Timer timer1;
+    private Label label15;
+    private CheckBox chDeepL;
+   Controller controller1 = new Controller(UserIndex.One);
     public Form1()
     {
       this.topMostForm.TopMost = true;
@@ -210,9 +211,9 @@ namespace TraduccionMain
       Decimal.ToInt32(this.numFinX.Value);
       Decimal.ToInt32(this.numFinY.Value);
       this.radioButton1.Checked = true;
-      //Thread thread = new Thread(new ThreadStart(this.Joystick2));
-      //thread.Start();
-      //thread.IsBackground = true;
+     /* Thread thread = new Thread(new ThreadStart(this.Joystick2));
+      thread.Start();
+      thread.IsBackground = true;*/
       if (WBEmulator.IsBrowserEmulationSet())
         return;
       WBEmulator.SetBrowserEmulationVersion();
@@ -862,7 +863,9 @@ namespace TraduccionMain
     {
     }
         ChromiumWebBrowser browser;
+        String temp;
     private void Form1_Load(object sender, EventArgs e) {
+            temp = this.Text;
             browser = new ChromiumWebBrowser("https://github.com/darkxex/OpenGamesTraductions/");
             webBrowser1.Controls.Add(browser);
             this.ActiveControl = (Control)this.textBoxTextoTraducidoExcel; }
@@ -901,6 +904,22 @@ namespace TraduccionMain
         this.textBoxTextoTraducidoExcel.Focus();
       }
     }
+        
+
+    public void Joystick2()
+        {
+            if (controller1.IsConnected)
+            {
+                this.Text = temp + " - Xbox One Controller Detected.";
+                State m_state = controller1.GetState();
+
+                if (m_state.Gamepad.Buttons.HasFlag(GamepadButtonFlags.Back) && m_state.Gamepad.Buttons.HasFlag(GamepadButtonFlags.RightThumb))
+                { this.Empezamos();
+                }
+                
+
+                 }
+        }
         /*
     public void Joystick2()
     {
@@ -1372,6 +1391,7 @@ namespace TraduccionMain
     private void InitializeComponent()
     {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.labAncho = new System.Windows.Forms.Label();
             this.labAlto = new System.Windows.Forms.Label();
@@ -1385,6 +1405,7 @@ namespace TraduccionMain
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
             this.chDeepL = new System.Windows.Forms.CheckBox();
             this.label16 = new System.Windows.Forms.Label();
             this.checkBoxExcelTranslate = new System.Windows.Forms.CheckBox();
@@ -1437,7 +1458,6 @@ namespace TraduccionMain
             this.textBoxTextoTraducidoExcel = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label15 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numIniX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFinX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numFinY)).BeginInit();
@@ -1660,6 +1680,15 @@ namespace TraduccionMain
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             this.panel1.MouseEnter += new System.EventHandler(this.EntraPanel);
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(436, 270);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(143, 26);
+            this.label15.TabIndex = 72;
+            this.label15.Text = "Author: ReidloGames\r\nUnofficial Update: Angel Xex";
+            // 
             // chDeepL
             // 
             this.chDeepL.AutoSize = true;
@@ -1674,11 +1703,11 @@ namespace TraduccionMain
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(221, 114);
+            this.label16.Location = new System.Drawing.Point(176, 114);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(82, 13);
+            this.label16.Size = new System.Drawing.Size(217, 13);
             this.label16.TabIndex = 69;
-            this.label16.Text = "Key:  Number 0 ";
+            this.label16.Text = "Keyboard: NumPad 0, Xbox One: Select+ R3";
             // 
             // checkBoxExcelTranslate
             // 
@@ -1717,7 +1746,7 @@ namespace TraduccionMain
             // radioButAnime
             // 
             this.radioButAnime.AutoSize = true;
-            this.radioButAnime.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.radioButAnime.BackColor = System.Drawing.Color.Transparent;
             this.radioButAnime.Location = new System.Drawing.Point(288, 2);
             this.radioButAnime.Name = "radioButAnime";
             this.radioButAnime.Size = new System.Drawing.Size(123, 17);
@@ -1729,7 +1758,7 @@ namespace TraduccionMain
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Location = new System.Drawing.Point(430, 240);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(88, 13);
@@ -1739,7 +1768,7 @@ namespace TraduccionMain
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.label13.BackColor = System.Drawing.Color.Transparent;
             this.label13.Location = new System.Drawing.Point(430, 227);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(115, 13);
@@ -1748,7 +1777,7 @@ namespace TraduccionMain
             // 
             // numericUpBinario
             // 
-            this.numericUpBinario.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.numericUpBinario.BackColor = System.Drawing.SystemColors.Window;
             this.numericUpBinario.Location = new System.Drawing.Point(412, 1);
             this.numericUpBinario.Maximum = new decimal(new int[] {
             280,
@@ -1814,6 +1843,7 @@ namespace TraduccionMain
             this.textBoxFs.Name = "textBoxFs";
             this.textBoxFs.Size = new System.Drawing.Size(100, 20);
             this.textBoxFs.TabIndex = 55;
+            this.textBoxFs.Visible = false;
             // 
             // label8
             // 
@@ -1824,6 +1854,7 @@ namespace TraduccionMain
             this.label8.Size = new System.Drawing.Size(54, 13);
             this.label8.TabIndex = 54;
             this.label8.Text = "FanSub:";
+            this.label8.Visible = false;
             // 
             // label12
             // 
@@ -1840,11 +1871,11 @@ namespace TraduccionMain
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(207, 96);
+            this.label11.Location = new System.Drawing.Point(175, 97);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(103, 13);
+            this.label11.Size = new System.Drawing.Size(89, 13);
             this.label11.TabIndex = 52;
-            this.label11.Text = "Button Translate:";
+            this.label11.Text = "Translate with:";
             this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // comboBox3
@@ -1854,7 +1885,7 @@ namespace TraduccionMain
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.IntegralHeight = false;
             this.comboBox3.ItemHeight = 12;
-            this.comboBox3.Location = new System.Drawing.Point(316, 96);
+            this.comboBox3.Location = new System.Drawing.Point(165, 288);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(75, 20);
             this.comboBox3.TabIndex = 51;
@@ -2255,9 +2286,9 @@ namespace TraduccionMain
             this.checkOnlyTradu.BackColor = System.Drawing.Color.Transparent;
             this.checkOnlyTradu.Location = new System.Drawing.Point(978, 63);
             this.checkOnlyTradu.Name = "checkOnlyTradu";
-            this.checkOnlyTradu.Size = new System.Drawing.Size(121, 17);
+            this.checkOnlyTradu.Size = new System.Drawing.Size(102, 17);
             this.checkOnlyTradu.TabIndex = 59;
-            this.checkOnlyTradu.Text = "View only traduction";
+            this.checkOnlyTradu.Text = "Translation Only";
             this.checkOnlyTradu.UseVisualStyleBackColor = false;
             this.checkOnlyTradu.CheckedChanged += new System.EventHandler(this.checkOnlyTradu_CheckedChanged);
             // 
@@ -2288,17 +2319,7 @@ namespace TraduccionMain
             // timer1
             // 
             this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(436, 270);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(143, 26);
-            this.label15.TabIndex = 72;
-            this.label15.Text = "Author: ReidloGames\r\nUnofficial Update: Angel Xex";
             // 
             // Form1
             // 
@@ -2309,11 +2330,12 @@ namespace TraduccionMain
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.MinimumSize = new System.Drawing.Size(300, 39);
             this.Name = "Form1";
             this.Tag = "";
-            this.Text = "Open GamesTraductions (1.0)";
+            this.Text = "Open GamesTraductions (1.1)";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormExit);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -2364,6 +2386,7 @@ namespace TraduccionMain
         {
             if (GetAsyncKeyState(Keys.NumPad0))
                 this.Empezamos();
+            Joystick2();
 
         }
 
