@@ -916,9 +916,9 @@ namespace TraduccionMain
                 if (m_state.Gamepad.Buttons.HasFlag(GamepadButtonFlags.Back) && m_state.Gamepad.Buttons.HasFlag(GamepadButtonFlags.RightThumb))
                 { this.Empezamos();
                 }
-                
+            }else
+             this.Text = temp;
 
-                 }
         }
         /*
     public void Joystick2()
@@ -2326,7 +2326,7 @@ namespace TraduccionMain
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1784, 312);
+            this.ClientSize = new System.Drawing.Size(1801, 312);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2335,7 +2335,7 @@ namespace TraduccionMain
             this.MinimumSize = new System.Drawing.Size(300, 39);
             this.Name = "Form1";
             this.Tag = "";
-            this.Text = "Open GamesTraductions (1.1)";
+            this.Text = "Open GamesTraductions (1.1.1)";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormExit);
             this.Load += new System.EventHandler(this.Form1_Load);
