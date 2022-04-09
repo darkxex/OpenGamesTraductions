@@ -210,7 +210,7 @@ namespace TraduccionMain
       Decimal.ToInt32(this.numIniY.Value);
       Decimal.ToInt32(this.numFinX.Value);
       Decimal.ToInt32(this.numFinY.Value);
-      this.radioButton1.Checked = true;
+      this.radioButAnime.Checked = true;
      /* Thread thread = new Thread(new ThreadStart(this.Joystick2));
       thread.Start();
       thread.IsBackground = true;*/
@@ -223,11 +223,11 @@ namespace TraduccionMain
 
     private void CapturedKeys(object sender, KeyPressEventArgs e)
     {
-      this.topMostForm.TopMost = true;
+      /*this.topMostForm.TopMost = true;
       if ((int) e.KeyChar != (int) Convert.ToChar((object) Keys.D0) && (int) e.KeyChar != (int) Convert.ToChar((object) Keys.Space))
         return;
       Console.WriteLine("click space");
-      this.Empezamos();
+      this.Empezamos();*/
     }
 
     public void Empezamos()
@@ -1705,9 +1705,9 @@ namespace TraduccionMain
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.Location = new System.Drawing.Point(176, 114);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(217, 13);
+            this.label16.Size = new System.Drawing.Size(216, 13);
             this.label16.TabIndex = 69;
-            this.label16.Text = "Keyboard: NumPad 0, Xbox One: Select+ R3";
+            this.label16.Text = "Keyboard: * (Multiply), Xbox One: Select+ R3";
             // 
             // checkBoxExcelTranslate
             // 
@@ -1793,7 +1793,7 @@ namespace TraduccionMain
             this.numericUpBinario.Size = new System.Drawing.Size(55, 20);
             this.numericUpBinario.TabIndex = 61;
             this.numericUpBinario.Value = new decimal(new int[] {
-            247,
+            160,
             0,
             0,
             0});
@@ -1904,6 +1904,7 @@ namespace TraduccionMain
             this.cbViewTraductor.TabIndex = 50;
             this.cbViewTraductor.Text = "TraductorView";
             this.cbViewTraductor.UseVisualStyleBackColor = true;
+            this.cbViewTraductor.CheckedChanged += new System.EventHandler(this.cbViewTraductor_CheckedChanged);
             // 
             // radioButton3
             // 
@@ -2335,7 +2336,7 @@ namespace TraduccionMain
             this.MinimumSize = new System.Drawing.Size(300, 39);
             this.Name = "Form1";
             this.Tag = "";
-            this.Text = "Open GamesTraductions (1.1.1)";
+            this.Text = "Open GamesTraductions (1.1.2)";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormExit);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -2384,13 +2385,18 @@ namespace TraduccionMain
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (GetAsyncKeyState(Keys.NumPad0))
+            if (GetAsyncKeyState(Keys.Multiply))
                 this.Empezamos();
             Joystick2();
 
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cbViewTraductor_CheckedChanged(object sender, EventArgs e)
         {
 
         }
