@@ -22,6 +22,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 
 namespace TraduccionMain
@@ -442,7 +443,7 @@ namespace TraduccionMain
       }
       this.bitmap = bitmap;
     }
-
+        /*
     public string codificaText(string result)
     {
       foreach (char ch in result)
@@ -475,7 +476,7 @@ namespace TraduccionMain
       }
       return this.res.Trim();
     }
-
+*/
     public void openWeb()
     {
       if (this.comboBox1.Text == "Ingles")
@@ -548,24 +549,27 @@ namespace TraduccionMain
       {
         if (this.resulTraduc != null)
         {
-          string str2 = this.codificaText(this.resulTraduc).Replace('"', '_').Trim().Replace('/', '_').Trim().Replace("|", "I").Trim().Replace("  ", "").Replace("   ", "");
-          //this.webBrowser1.ScriptErrorsSuppressed = true;
-  
-           string urlString = "https://translate.google.cl/?sl=" + this.inLeng + "&tl=" + this.outLeng + "&text=" + str2.Trim();
-                    if (this.chDeepL.Checked)
-                        urlString = "https://www.deepl.com/es/translator#"+this.inLeng+"/"+this.outLeng+"/" + (str2.Trim()).Replace("\n", "%0A");
+            string GoogleEncode = HttpUtility.UrlEncode(this.resulTraduc);
+            string DeepLEncode = HttpUtility.UrlPathEncode(this.resulTraduc);
+            Clipboard.SetText(this.resulTraduc);
+            //string str2 = this.codificaText(this.resulTraduc).Replace('"', '_').Trim().Replace('/', '_').Trim().Replace("|", "I").Trim().Replace("  ", "").Replace("   ", "");
+            //this.webBrowser1.ScriptErrorsSuppressed = true;
 
-                    Clipboard.SetText(urlString);
-
-                    this.textBoxTextoTraducidoExcel.Focus();
-          if (this.cbViewTraductor.Checked)
-          {
-                        //Create a new instance in code or add via the designer
+            GoogleEncode = GoogleEncode.Trim().Replace("|", "I").Trim().Replace("  ", "").Replace("   ", "");
+            DeepLEncode = DeepLEncode.Trim().Replace("/", "%5C%2F").Trim().Replace("|", "I").Trim().Replace("  ", "").Replace("   ", "");
+            string urlString = "https://translate.google.cl/?sl=" + this.inLeng + "&tl=" + this.outLeng + "&text=" + GoogleEncode.Trim();
+            if (this.chDeepL.Checked)
+            urlString = "https://www.deepl.com/es/translator#"+this.inLeng+"/"+this.outLeng+"/" + (DeepLEncode.Trim());
+            
+            this.textBoxTextoTraducidoExcel.Focus();
+            if (this.cbViewTraductor.Checked)
+            {
+            //Create a new instance in code or add via the designer
                         
-                        //Load a different url
-                        browser.LoadUrl(urlString);
-                        this.textBoxTextoTraducidoExcel.Focus();
-          }
+            //Load a different url
+            browser.LoadUrl(urlString);
+            this.textBoxTextoTraducidoExcel.Focus();
+            }
           if (this.checkBoxAuto.Checked)
           {
             str1 = " ";
@@ -2327,7 +2331,7 @@ namespace TraduccionMain
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1801, 312);
+            this.ClientSize = new System.Drawing.Size(1818, 312);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -2336,7 +2340,7 @@ namespace TraduccionMain
             this.MinimumSize = new System.Drawing.Size(300, 39);
             this.Name = "Form1";
             this.Tag = "";
-            this.Text = "Open GamesTraductions (1.1.2)";
+            this.Text = "Open GamesTraductions (1.1.3)";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FormExit);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -2385,9 +2389,12 @@ namespace TraduccionMain
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (GetAsyncKeyState(Keys.Multiply))
-                this.Empezamos();
+            
             Joystick2();
+            if (GetAsyncKeyState(Keys.Multiply))
+            {
+                this.Empezamos();
+            }
 
         }
 
