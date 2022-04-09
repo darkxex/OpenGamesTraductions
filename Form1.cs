@@ -4,6 +4,7 @@
 // MVID: 3E46C48C-4892-404C-8AE7-6FD2A81F65BF
 // Assembly location: C:\Users\darkx\OneDrive\Desktop\Gamestraductions 4.1.1 Only Windows\Gamestraductions 4.1.1\netcoreapp2.0\GamesTraductions.exe
 
+using CefSharp.WinForms;
 using SharpDX.DirectInput;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace TraduccionMain
 {
   public class Form1 : Form
   {
+
     private Form topMostForm = new Form();
     private int xMouse = 0;
     private int yMouse = 0;
@@ -544,21 +546,22 @@ namespace TraduccionMain
         if (this.resulTraduc != null)
         {
           string str2 = this.codificaText(this.resulTraduc).Replace('"', '_').Trim().Replace('/', '_').Trim().Replace("|", "I").Trim().Replace("  ", "").Replace("   ", "");
-          this.webBrowser1.ScriptErrorsSuppressed = true;
+          //this.webBrowser1.ScriptErrorsSuppressed = true;
   
            string urlString = "https://translate.google.es/?hl=ca#view=home&op=translate&sl=" + this.inLeng + "&tl=" + this.outLeng + "&text=" + str2.Trim();
+                    if (this.chDeepL.Checked)
+                        urlString = "https://www.deepl.com/es/translator#en/es/" + (str2.Trim()).Replace("\n", "%0A");
 
-           if (this.chDeepL.Checked)
-           urlString = "https://www.deepl.com/es/translator#en/es/" + (str2.Trim()).Replace("\n", "%0A");
-                    
-            Clipboard.SetText(urlString);
+                    Clipboard.SetText(urlString);
 
-            this.textBoxTextoTraducidoExcel.Focus();
+                    this.textBoxTextoTraducidoExcel.Focus();
           if (this.cbViewTraductor.Checked)
           {
-            this.webBrowser1.Navigate(urlString);
-            this.webBrowser1.Visible = true;
-            this.textBoxTextoTraducidoExcel.Focus();
+                        //Create a new instance in code or add via the designer
+                        
+                        //Load a different url
+                        browser.LoadUrl(urlString);
+                        this.textBoxTextoTraducidoExcel.Focus();
           }
           if (this.checkBoxAuto.Checked)
           {
@@ -827,14 +830,17 @@ namespace TraduccionMain
         Point point1 = new Point(location.X, 0);
         panel2.Location = point1;
         this.AutoScroll = false;
-        this.webBrowser1.Location = new Point(-450, -70);
+        if (chDeepL.Checked)
+        this.webBrowser1.Location = new Point(-450, -190);
+        else
+        this.webBrowser1.Location = new Point(-450, -170);
         CheckBox checkOnlyTradu1 = this.checkOnlyTradu;
         location = this.webBrowser1.Location;
         Point point2 = new Point(location.X + 350);
         checkOnlyTradu1.Location = point2;
         CheckBox checkOnlyTradu2 = this.checkOnlyTradu;
         location = this.webBrowser1.Location;
-        Point point3 = new Point(location.Y + 280);
+        Point point3 = new Point(location.Y + 380);
         checkOnlyTradu2.Location = point3;
         Label indicador = this.indicador;
         location = this.checkOnlyTradu.Location;
@@ -857,8 +863,12 @@ namespace TraduccionMain
     private void panel1_Paint(object sender, PaintEventArgs e)
     {
     }
-
-    private void Form1_Load(object sender, EventArgs e) => this.ActiveControl = (Control) this.textBoxTextoTraducidoExcel;
+        ChromiumWebBrowser browser;
+    private void Form1_Load(object sender, EventArgs e) {
+            browser = new ChromiumWebBrowser("www.google.com");
+            webBrowser1.Controls.Add(browser);
+            this.ActiveControl = (Control)this.textBoxTextoTraducidoExcel; }
+   
 
     private void label11_Click(object sender, EventArgs e)
     {
@@ -2244,7 +2254,7 @@ namespace TraduccionMain
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScrollBarsEnabled = false;
-            this.webBrowser1.Size = new System.Drawing.Size(1252, 328);
+            this.webBrowser1.Size = new System.Drawing.Size(1252, 556);
             this.webBrowser1.TabIndex = 19456;
             this.webBrowser1.WebBrowserShortcutsEnabled = false;
             // 
@@ -2280,6 +2290,7 @@ namespace TraduccionMain
             this.textBoxTextoTraducidoExcel.Size = new System.Drawing.Size(584, 91);
             this.textBoxTextoTraducidoExcel.TabIndex = 60;
             this.textBoxTextoTraducidoExcel.Visible = false;
+            this.textBoxTextoTraducidoExcel.TextChanged += new System.EventHandler(this.textBoxTextoTraducidoExcel_TextChanged);
             // 
             // panel2
             // 
@@ -2290,7 +2301,7 @@ namespace TraduccionMain
             this.panel2.Controls.Add(this.lbError);
             this.panel2.Location = new System.Drawing.Point(454, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1269, 310);
+            this.panel2.Size = new System.Drawing.Size(1269, 538);
             this.panel2.TabIndex = 19;
             // 
             // Form1
@@ -2341,5 +2352,9 @@ namespace TraduccionMain
 
         }
 
+        private void textBoxTextoTraducidoExcel_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
